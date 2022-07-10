@@ -1,0 +1,79 @@
+<ng-template #loginContent let-loginModal>
+  <div class="modal-header">
+    <h2 class="modal-title text-primary mb-auto" id="modal-basic-title">Login</h2>
+    <button type="button" class="btn-close" aria-label="Close" (click)="loginModal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form class="form-control">
+        <div class="form-group form-floating mb-3">
+          <input ngbAutofocus type="username" class="form-control" placeholder="Enter a username" name="username"
+            [(ngModel)]="loginUser.username">
+            <label>Username</label>
+        </div>
+      <div class="form-group form-floating mb-3">
+        <input type="password" class="form-control" placeholder="Password" name="password"
+          [(ngModel)]="loginUser.password">
+        <label>Password</label>
+      </div>
+      <div class="form-group form-check mb-3">
+        <input type="checkbox" class="form-check-input">
+        <label class="form-check-label">Remember me</label>
+      </div>
+      <br>
+      <div class="d-grid">
+        <button type="button" class="btn btn-outline-primary col-4 mx-auto"
+          (click)="loginModal.close('Save click')">Login</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a class="mx-auto" (click)="loginModal.dismiss('cross-click')" (click)="openRegistration(registrationContent)">Need
+      an account? Register here.</a>
+  </div>
+</ng-template>
+
+<ng-template #registrationContent let-registrationModal>
+  <div class="modal-header">
+    <h2 class="modal-title text-primary mb-auto" id="modal-basic-title">Register Now</h2>
+    <button type="button" class="btn-close" aria-label="Close"
+      (click)="registrationModal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form class="form-control">
+      <div class="form-group form-floating mb-3">
+        <input ngbAutofocus type="username" class="form-control" placeholder="Enter a username" name="username"
+          [(ngModel)]="newUser.username">
+        <label>Username</label>
+        <!-- <span class="hint alert-success">Enter a username</span> -->
+      </div>
+      <div class="form-group form-floating mb-3">
+        <input type="email" class="form-control" placeholder="Enter email" name="email" [(ngModel)]="newUser.email">
+        <label>Email Address</label>
+        <!-- <span class="hint alert-success">Enter a valid email</span> -->
+      </div>
+      <div class="form-group form-floating mb-3">
+        <input type="password" class="form-control" placeholder="Password" name="password"
+          [(ngModel)]="newUser.password">
+        <label>Password</label>
+        <!-- <span class="hint alert-success">Password should be 8 or more characters </span> -->
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" placeholder="Password">
+        <label>Re-enter Password</label>
+        <!-- <span class="hint alert-success">Re-enter your password</span> -->
+      </div>
+      <div class="d-grid">
+        <button type="button" class="btn btn-outline-primary col-4 mx-auto"
+          (click)="registrationModal.close('Save click')">Register</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a class="mx-auto" (click)="registrationModal.dismiss('cross-click')" (click)="openLogin(loginContent)">Already have
+      an account? Sign-in here.</a>
+  </div>
+</ng-template>
+
+<button #someVar class="btn btn-md btn-outline-primary" (click)="openLogin(loginContent)">&nbsp; Login &nbsp;</button>
+&nbsp;
+<button class="btn btn-md btn-outline-primary" (click)="openRegistration(registrationContent)">Register</button>

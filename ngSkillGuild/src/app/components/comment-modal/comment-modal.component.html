@@ -1,0 +1,20 @@
+<ng-template #commentContent let-commentModal>
+  <div class="modal-header">
+    <span style="min-width: 32px;">&nbsp;</span>
+    <h2 class="modal-title text-primary mx-auto" id="modal-basic-title">Submit a Comment</h2>
+    <button style="margin: 0px;" type="button" class="btn-close" aria-label="Close" (click)="commentModal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form class="form-control">
+      <div class="form-group form-floating mb-3">
+        <textarea ngbAutoFocus class="form-control" placeholder="Membership Criteria" name="membershipCriteria" rows="8" style="height: 100%;" [(ngModel)]="comment.textContent"></textarea>
+      </div>
+      <br>
+      <div class="d-grid">
+        <button type="button" class="btn btn-outline-primary col-4 mx-auto" (click)="commentModal.close('Save click')">Submit</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<button class="btn btn-sm btn-primary mx-auto" (click)="openCommentModal(commentContent)">Add Comment <i class="bi bi-chat"></i></button>

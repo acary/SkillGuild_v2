@@ -1,0 +1,50 @@
+<ng-template #contentContent let-contentModal>
+  <div class="modal-header">
+    <span style="min-width: 32px;">&nbsp;</span>
+    <h2 class="modal-title text-primary mx-auto" id="modal-basic-title">Create New Content</h2>
+    <button style="margin: 0px;" type="button" class="btn-close" aria-label="Close" (click)="contentModal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form class="form-control">
+      <div class="form-group form-floating mb-3">
+        <input ngbAutofocus type="text" class="form-control" placeholder="Content Title" name="contentTitle"
+          [(ngModel)]="content.title">
+        <label>Content Title</label>
+      </div>
+      <div class="form-group form-floating mb-3">
+        <input type="text" class="form-control" placeholder="Description" name="description"
+          [(ngModel)]="content.description">
+        <label>Description</label>
+      </div>
+      <div *ngIf="content.isPublic; else isPrivate" class="form-group form-check form-switch mb-3 d-flex align-items-center">
+        <input type="checkbox" class="form-check-input" (click)="toggleIsPublic()">
+        <label class="form-check-label">&nbsp;&nbsp;<i class="bi bi-unlock" id="locks"></i> Public</label>
+      </div>
+      <ng-template #isPrivate>
+        <div class="form-group form-check form-switch mb-3 d-flex align-items-center">
+          <input type="checkbox" class="form-check-input" role="switch" checked (click)="toggleIsPublic()">
+          <label class="form-check-label">&nbsp;<i class="bi bi-lock-fill" id="locks"></i> Private</label>
+        </div>
+      </ng-template>
+      <div class="form-group form-floating mb-3">
+        <input type="date" class="form-control" placeholder="Presentation Date" name="presentationDate"
+          [(ngModel)]="content.presentationDate">
+        <label>Presentation Date</label>
+        <!-- <ngb-datepicker #d></ngb-datepicker> -->
+      </div>
+      <div class="form-group form-floating mb-3">
+        <input type="number" class="form-control" placeholder="Length Minutes" name="lengthMinutes"
+          [(ngModel)]="content.lengthMinutes">
+        <label>Length (Minutes)</label>
+      </div>
+      <br>
+      <div class="d-grid">
+        <button type="button" class="btn btn-outline-primary col-4 mx-auto"
+          (click)="contentModal.close('Save click')">Submit</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<button class="btn btn-sm btn-success my-2" style="color:white;" (click)="openContentModal(contentContent)">Create New Content <i
+  class="bi bi-plus-circle ml-2"></i></button>

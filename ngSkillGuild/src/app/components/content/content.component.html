@@ -1,0 +1,370 @@
+<div *ngIf="isAdmin()" class="container py-4">
+    <div *ngIf="contents && !createForm && !selected">
+        <h3 class="m-2 display-6">Content</h3>
+        <button (click)="showCreateForm()" class="btn btn-success btn-lg px-4 m-1">New Content</button>
+        <hr>
+        <table class="table table-striped table-hover">
+            <thead>
+                <th>ID</th>
+                <th>Guild ID</th>
+                <th>Guild Name</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Public</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let content of (contents)" (click)="selected = this.content">
+                    <td>{{content.id}}</td>
+                    <td>{{content.guild.id}}</td>
+                    <td>{{content.guild.name}}</td>
+                    <td>{{content.title}}</td>
+                    <td>{{content.description}}</td>
+                    <td>{{content.isPublic}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="selected">
+        <header class="pb-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+                <a [routerLink]="['/content']"><button (click)="displayAll()"
+                        class="btn btn-primary btn-sm m-2">Back</button></a>
+                <span class="fs-4">Content</span>
+            </a>
+        </header>
+
+        <h3 class="m-2 display-6">{{selected.title}}</h3>
+        <hr>
+        <p><span class="badge bg-primary">{{selected.id}}</span></p>
+        <p>Guild ID: {{selected.guild.id}}</p>
+        <p>Description: {{selected.description}}</p>
+        <p>Publish Date: {{selected.publishDate}}</p>
+        <p>Is Public: {{selected.isPublic}}</p>
+        <p>Is Live: {{selected.isLive}}</p>
+        <p>Status ID: {{selected.statusId}}</p>
+        <p>Last Updated: {{selected.lastUpdated}}</p>
+        <p>Created By: {{selected.createdByUser.id}}</p>
+        <p>Length (minutes): {{selected.lengthMinutes}}</p>
+        <p>Presentation Date: {{selected.presentationDate}}</p>
+        <button (click)="deleteContent(selected.id)" class="btn btn-danger m-1">Delete</button>
+    </div>
+
+    <div *ngIf="!contents">
+        <h3 class="m-2 display-6">Content</h3>
+        <hr>
+        <p>No content found</p>
+    </div>
+</div>
+
+<div *ngIf="createForm">
+    <main>
+        <div class="container">
+            <header class="pb-3 mb-4 border-bottom">
+                <h1 class="display-3">Create Content</h1>
+                <button *ngIf="!showAllContents" (click)="toggleAllContents()"
+                    class="btn btn-primary btn-lg px-4 m-1">All
+                    Content</button>
+            </header>
+            <p class="fs-5 col-md-8">Use this form to create an new content item.</p>
+
+            <form [formGroup]="createContentForm" (ngSubmit)="sendNewContent()" novalidate>
+                <input type="hidden" value=100 formControlName="id">
+
+                <label for="guildId" class="form-label"><strong>Guild ID *</strong></label>
+                <input type='number' id="guildId" placeholder='1' class="form-control m-1" formControlName="guildId" />
+                <div *ngIf="createContentForm.controls['guildId'].invalid && (createContentForm.controls['guildId'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="createContentForm.controls['guildId'].errors">
+                        Guild ID is required.
+                    </div>
+                </div>
+
+                <label for="title" class="form-label"><strong>Title *</strong></label>
+                <input type='text' id="title" placeholder='Web Development Content' class="form-control m-1"
+                    formControlName="title" />
+                <div *ngIf="createContentForm.controls['title'].invalid && (createContentForm.controls['title'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="createContentForm.controls['title'].errors">
+                        Title is required.
+                    </div>
+                </div>
+
+                <label for="description" class="form-label"><strong>Description *</strong></label>
+                <input type='text' formControlName='description' id="description" placeholder='About this content'
+                    class="form-control m-1" formControlName="description" />
+                <div *ngIf="createContentForm.controls['description'].invalid && (createContentForm.controls['description'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="createContentForm.controls['description'].errors">
+                        Description is required.
+                    </div>
+                </div>
+
+                <label for="publishDate" class="form-label"><strong>Publish Date *</strong></label>
+                <input type='text' formControlName='publishDate' id="publishDate" placeholder='2022-06-02'
+                    class="form-control m-1" formControlName="publishDate" />
+                <div *ngIf="createContentForm.controls['publishDate'].invalid && (createContentForm.controls['publishDate'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="createContentForm.controls['publishDate'].errors">
+                        Publish Date is required.
+                    </div>
+                </div>
+
+                <label for="statusId" class="form-label"><strong>Status ID *</strong></label>
+                <input type='text' formControlName='statusId' id="statusId" placeholder='1' class="form-control m-1" />
+                <div *ngIf="createContentForm.controls['statusId'].invalid && (createContentForm.controls['statusId'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="createContentForm.controls['statusId'].errors">
+                        Status ID is required.
+                    </div>
+                </div>
+
+                <label for="createdByUserId" class="form-label"><strong>Created By User ID *</strong></label>
+                <input type='text' formControlName='createdByUserId' id="createdByUserId" placeholder='1'
+                    class="form-control m-1" />
+                <div *ngIf="createContentForm.controls['createdByUserId'].invalid && (createContentForm.controls['createdByUserId'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="createContentForm.controls['createdByUserId'].errors">
+                        Created By User ID is required.
+                    </div>
+                </div>
+
+                <label for="presentationDate" class="form-label"><strong>Presentation Date *</strong></label>
+                <input type='text' formControlName='presentationDate' id="presentationDate" placeholder='2022-06-02'
+                    class="form-control m-1" formControlName="presentationDate" />
+                <div *ngIf="createContentForm.controls['presentationDate'].invalid && (createContentForm.controls['presentationDate'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="createContentForm.controls['presentationDate'].errors">
+                        Presentation Date is required.
+                    </div>
+
+                </div>
+                <label for="lengthMinutes" class="form-label"><strong>Length (Minutes) *</strong></label>
+                <input type='number' formControlName='lengthMinutes' id="lengthMinutes" placeholder='60'
+                    class="form-control m-1" formControlName="lengthMinutes" />
+                <div *ngIf="createContentForm.controls['lengthMinutes'].invalid && (createContentForm.controls['lengthMinutes'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="createContentForm.controls['lengthMinutes'].errors">
+                        Length is required.
+                    </div>
+                </div>
+
+
+                 <label for="isPublic" class="form-label"><strong>Is Public *</strong></label>
+                <input type='checkbox' formControlName='isPublic' id="isPublic" class="m-1" />
+                <div *ngIf="createContentForm.controls['isPublic'].invalid && (createContentForm.controls['isPublic'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="createContentForm.controls['isPublic'].errors">
+                        Is Public is required.
+                    </div>
+                </div>
+                <br>
+
+                <label for="isLive" class="form-label"><strong>Is Live *</strong></label>
+                <input type='checkbox' formControlName="isLive" id="isLive" class="m-1" />
+                <div *ngIf="createContentForm.controls['isLive'].invalid && (createContentForm.controls['isLive'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="createContentForm.controls['isLive'].errors">
+                        Is Live is required.
+                    </div>
+                </div>
+                <br>
+
+                <button type="submit" class="btn btn-success btn-lg px-4 m-1">Create Content</button>
+            </form>
+            <footer class="pt-3 mt-4 text-muted border-top">
+                &copy; 2022 SkillGuild
+            </footer>
+        </div>
+    </main>
+</div>
+
+    <!-- Content -->
+    <div *ngIf="selectedContent" class="brand-bg">
+        <section class="py-5 text-center container brand-bg"
+            style="background-image: url('assets/images/doctype-hi-res_3.jpg'); background-size: cover; background-position:center; height: auto; width: auto;">
+            <!-- style="background-image: url('https://images.unsplash.com/3/doctype-hi-res.jpg'); background-size: cover; background-position:center; height: auto; width: auto;"> -->
+            <div class="row py-lg-5">
+                <div class="content-banner col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">{{selectedContent.title}}</h1>
+                    <small class="text-muted line-clamp">{{selectedContent.description}}</small><br>
+                </div>
+            </div>
+        </section>
+        <div class="album py-2 brand-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col col-sm-12 col-lg-8">
+                        <h1 class="fw-light">{{selectedContent.title}}</h1>
+                        <span class="lead">{{selectedContent.description}}</span><br>
+                        <span class="text-muted"><small>By {{selectedContent.createdByUser.username}} on {{selectedContent.presentationDate | date}} <span *ngIf="selectedContent.topics[0]">about {{ selectedContent.topics[0]?.name }}</span></small></span><br>
+                        <hr class="my-3">
+                        <!-- Resources-->
+                        <h5 class="mt-2">Content Resources</h5>
+                        <ngb-accordion #acc="ngbAccordion" class="my-2">
+                            <ngb-panel id="toggle-1" title="{{ selectedContent.resources[0].title }}" *ngIf="selectedContent.resources[0]">
+                                <ng-template ngbPanelContent>
+                                    <div>
+                                        <!-- <p class="fw-bold">{{ selectedContent.resources[0].title }}</p> -->
+                                        <p class="fw-semibold">{{ selectedContent.resources[0].description }}</p>
+                                        <a href="{{ selectedContent.resources[0].resourceUrl }}"
+                                            target="_blank"><code>{{ selectedContent.resources[0].resourceUrl }}</code></a>
+                                    </div>
+                                </ng-template>
+                            </ngb-panel>
+                            <ngb-panel id="toggle-2" title="{{ selectedContent.resources[1].title }}" *ngIf="selectedContent.resources[1]">
+                                <ng-template ngbPanelContent>
+                                    <div>
+                                        <!-- <p class="fw-bold">{{ selectedContent.resources[1].title }}</p> -->
+                                        <p class="fw-semibold">{{ selectedContent.resources[1].description }}</p>
+                                        <a href="{{ selectedContent.resources[1].resourceUrl }}"
+                                            target="_blank"><code>{{ selectedContent.resources[1].resourceUrl }}</code></a>
+                                    </div>
+                                </ng-template>
+                            </ngb-panel>
+                            <ngb-panel id="toggle-3" title="{{ selectedContent.resources[2].title }}" *ngIf="selectedContent.resources[2]">
+                                <ng-template ngbPanelContent>
+                                    <div>
+                                        <!-- <p class="fw-bold">{{ selectedContent.resources[2].title }}</p> -->
+                                        <p class="fw-semibold">{{ selectedContent.resources[2].description }}</p>
+                                        <a href="{{ selectedContent.resources[2].resourceUrl }}"
+                                            target="_blank"><code>{{ selectedContent.resources[2].resourceUrl }}</code></a>
+                                    </div>
+                                </ng-template>
+                            </ngb-panel>
+                            <ngb-panel id="toggle-4" title="{{ selectedContent.resources[3].title }}" *ngIf="selectedContent.resources[3]">
+                                <ng-template ngbPanelContent>
+                                    <div>
+                                        <!-- <p class="fw-bold">{{ selectedContent.resources[3].title }}</p> -->
+                                        <p class="fw-semibold">{{ selectedContent.resources[3].description }}</p>
+                                        <a href="{{ selectedContent.resources[3].resourceUrl }}"
+                                            target="_blank"><code>{{ selectedContent.resources[3]?.resourceUrl }}</code></a>
+                                    </div>
+                                </ng-template>
+                            </ngb-panel>
+                        </ngb-accordion>
+                        <div *ngIf="selectedContent.resources[0] == null">
+                            <p>No content resources found for {{selectedContent.title}}.</p>
+                        </div>
+
+                        <hr class="my-3">
+                        <!-- Questions -->
+                        <h5 class="mt-2">Questions</h5>
+
+                        <ngb-accordion *ngIf="questions" #acc="ngbAccordion" class="my-2">
+                            <ngb-panel *ngIf="questions[0]" id="toggle-1" title="{{ questions[0]?.question }}">
+                                <ng-template ngbPanelContent>
+                                    <div>
+                                        <p class="fw-semibold">{{ questions[0].correctAnswer }}</p>
+                                    </div>
+                                </ng-template>
+                            </ngb-panel>
+                            <ngb-panel *ngIf="questions[1]" id="toggle-2" title="{{ questions[1]?.question }}">
+                                <ng-template ngbPanelContent>
+                                    <div>
+                                        <p class="fw-semibold">{{ questions[1].correctAnswer }}</p>
+                                    </div>
+                                </ng-template>
+                            </ngb-panel>
+                            <ngb-panel *ngIf="questions[2]" id="toggle-3" title="{{ questions[2]?.question }}">
+                                <ng-template ngbPanelContent>
+                                    <div>
+                                        <p class="fw-semibold">{{ questions[2]?.correctAnswer }}</p>
+                                    </div>
+                                </ng-template>
+                            </ngb-panel>
+                        </ngb-accordion>
+
+                        <div *ngIf="questions.length == 0">
+                            <p>No questions found for {{selectedContent.title}}.</p>
+                        </div>
+                    </div>
+
+                    <!-- Content Details-->
+                    <div class="col col-md-12 col-lg-4 align-self-end">
+                        <!-- Creator Controls -->
+                        <div class="my-2 text-end" *ngIf="selectedContent.createdByUser === this.user">
+                            <button class="btn btn-outline-success mx-1">Publish</button>
+                            <button class="btn btn-outline-dark mx-1">Return to Draft</button>
+                            <button class="btn btn-outline-danger mx-1">Delete</button>
+                        </div>
+
+                        <!-- Details -->
+                        <div class="list-group w-auto">
+                            <h6 class="mt-3">Details</h6>
+                            <span class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                                <div class="d-flex gap-2 w-100 justify-content-between">
+                                    <div>
+                                        <h6 class="mb-0">Description</h6>
+                                        <p class="mb-0 opacity-75">{{selectedContent.description}}</p>
+                                        <p class="my-2"><small>Share: <code><a href="{{ this.shareUrl }}" target="_blank">{{ this.shareUrl }}</a></code></small></p>
+                                    </div>
+                                    <small class="opacity-75 text-nowrap">{{ selectedContent.topics[0]?.name }}</small>
+                                </div>
+                            </span>
+                            <span class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                                <div class="d-flex gap-2 w-100 justify-content-between">
+                                    <div>
+                                        <h6 class="mb-0">Date and time</h6>
+                                        <p class="mb-0 opacity-75">{{selectedContent.presentationDate | date}}</p>
+                                    </div>
+                                    <small class="opacity-75 text-nowrap"><i
+                                            class="bi bi-calendar-event-fill"></i></small>
+                                </div>
+                            </span>
+                            <span class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                                <div *ngIf="selectedContent.isPublic == true"
+                                    class="d-flex gap-2 w-100 justify-content-between">
+                                    <div>
+                                        <h6 class="mb-0">Public</h6>
+                                        <p class="mb-0 opacity-75">Anyone can view this presentation.</p>
+                                    </div>
+                                    <small class="opacity-75 text-nowrap"><i class="bi bi-unlock-fill"></i></small>
+                                </div>
+                                <div *ngIf="selectedContent.isPublic == false"
+                                    class="d-flex gap-2 w-100 justify-content-between">
+                                    <div>
+                                        <h6 class="mb-0">Private</h6>
+                                        <p class="mb-0 opacity-75">Only guild members can view this presentation.</p>
+                                    </div>
+                                    <small class="opacity-75 text-nowrap"><i class="bi bi-lock-fill"></i></small>
+                                </div>
+                            </span>
+                            <span class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                                <div class="d-flex gap-2 w-100 justify-content-between">
+                                    <div>
+                                        <h6 class="mb-0">About {{selectedGuild?.name}}</h6>
+                                        <p class="mb-0 opacity-75">{{selectedGuild?.description}}</p>
+                                    </div>
+                                    <small class="opacity-75 text-nowrap"><i class="bi bi-shield-fill"></i></small>
+                                </div>
+                            </span>
+                        </div>
+
+                        <!-- Comments -->
+                        <div class="hstack gap-3 mt-4 mb-2">
+                            <span class="mt-2"><h6><i class="bi bi-chat-right-text-fill align-middle"></i>  Comments</h6></span>
+                            <app-comment-modal [selectedContentId]="selectedContent.id" class="align-middle ms-auto"></app-comment-modal>
+                        </div>
+                        <div *ngIf="comments" class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
+                            <div *ngFor="let comment of comments"
+                                class="list-group list-group-flush border-bottom scrollarea">
+                                <span class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
+                                    <div class="d-flex w-100 align-items-center justify-content-between">
+                                        <strong class="mb-1">{{comment.textContent}}</strong>
+                                        <small>{{ comment.createdByUser.username }}</small>
+                                    </div>
+                                    <div class="col-10 mb-1 small">{{comment.createdOn | date}}</div>
+                                </span>
+                            </div>
+                        </div>
+                        <div *ngIf="comments.length == 0">
+                            <p>No comments found for {{selectedContent.title}}.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>

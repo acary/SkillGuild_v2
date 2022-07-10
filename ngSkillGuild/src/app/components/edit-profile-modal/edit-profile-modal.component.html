@@ -1,0 +1,43 @@
+<ng-template #profileContent let-profileModal>
+  <div class="modal-header">
+    <h2 class="modal-title text-primary mb-auto" id="modal-basic-title">Edit User Profile</h2>
+    <button type="button" class="btn-close" aria-label="Close" (click)="profileModal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form class="form-control">
+      <div class="row">
+        <div class="col">
+          <div class="form-group form-floating mb-3">
+            <input ngbAutofocus type="text" class="form-control" placeholder="First Name" name="firstName"
+              [(ngModel)]="user.firstName">
+            <label>First Name</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group form-floating mb-3">
+            <input type="text" class="form-control" placeholder="Last Name" name="lastName" [(ngModel)]="user.lastName">
+            <label>Last Name</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form-floating mb-3">
+        <input type="email" class="form-control" placeholder="Email" name="email" [(ngModel)]="user.email">
+        <label>Email</label>
+      </div>
+      <div class="form-group form-floating mb-3">
+        <input type="text" class="form-control" placeholder="Profile Image Url" name="profileImgUrl" [(ngModel)]="user.profileImgUrl">
+        <label>Profile Image Url</label>
+      </div>
+      <div class="form-group form-floating mb-3">
+        <textarea class="form-control" placeholder="About Me" name="aboutMe" rows="8" style="height: 100%;" [(ngModel)]="user.aboutMe"></textarea>
+        <label>About Me</label>
+      </div>
+      <br>
+      <div class="d-grid">
+        <button type="button" class="btn btn-outline-primary col-4 mx-auto"
+          (click)="profileModal.close('Save click')">Submit</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<button class="btn btn-outline-secondary" id="editButton" (click)="openEditProfile(profileContent)"><i class="bi bi-pen"></i></button>

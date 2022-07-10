@@ -1,0 +1,36 @@
+
+  <html>
+
+<div class="overlay container-fluid mt-3 col-md-8">
+  <div class="billboard-banner rounded">
+    <h1 class="hometext display-5 fw-bold">SkillGuild</h1>
+    <p class="fw-semibold">Create and join groups around areas of interest<br>
+      and learn by teaching <br>
+      <a [routerLink]="['/hub']"><button class="btn btn-primary btn-sm my-2" type="button"><i class="bi bi-search"></i> Find
+        a Guild</button></a>
+      </p>
+    </div>
+  </div>
+
+  <ngb-carousel *ngIf="images" [showNavigationArrows]="showNavigationArrows"
+  [showNavigationIndicators]="showNavigationIndicators" style="z-index:-999;">
+  <ng-template ngbSlide *ngFor="let image of images">
+    <div class="picsum-img-wrapper">
+      <img [src]="image" alt="SkillGuild">
+    </div>
+  </ng-template>
+</ngb-carousel>
+
+
+
+<footer class="py-4">
+  <div class="container">
+    <p class="float-end mb-1">
+      <app-create-guild-modal></app-create-guild-modal>
+    </p>
+    <p class="display-6 mb-1">Get started</p>
+    <p class="mb-0 fw-semibold">Sharpen your skills, explore new ones, or create and grow a community by sharing the knowledge you already have.</p>
+  </div>
+</footer>
+</html>
+

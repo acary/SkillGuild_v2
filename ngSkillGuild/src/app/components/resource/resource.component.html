@@ -1,0 +1,121 @@
+<div class="container py-2">
+  <div *ngIf="resources && !createForm && !selected">
+    <h3 class="m-2 display-6">Resources</h3>
+    <button (click)="showCreateForm()" class="btn btn-success btn-lg px-4 m-1">New Resource</button>
+    <hr>
+    <table class="table table-striped table-hover">
+      <thead>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Image URL</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let resource of (resources)" (click)="selected = this.resource">
+          <td>{{resource.id}}</td>
+          <td>{{resource.title}}</td>
+          <td>{{resource.description}}</td>
+          <td>{{resource.resourceUrl}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="selected && !editResource">
+    <header class="pb-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center text-dark text-decoration-none"
+        [routerLink]="['/resource']"><button (click)="displayAll()" class="btn btn-primary btn-sm m-2">Back</button></a>
+        <span class="fs-4">Resource</span>
+    </header>
+
+    <h3 class="m-2 display-6">{{selected.title}}</h3>
+    <hr>
+    <p><span class="badge bg-primary">{{selected.id}}</span></p>
+    <p>Description: {{selected.description}}</p>
+    <p>Resource URL: {{selected?.resourceUrl}}</p>
+    <button (click)="displayAll()" class="btn btn-secondary m-1">Back</button>
+    <button (click)="setEditResource()" class="btn btn-info m-1">Edit</button>
+    <button (click)="deleteResource(selected.id)" class="btn btn-danger m-1">Delete</button>
+  </div>
+
+  <div *ngIf="!resources">
+    <h3 class="m-2 display-6">Resources</h3>
+    <hr>
+    <p>No resources found</p>
+  </div>
+</div>
+
+<div *ngIf="editResource">
+  <p><span class="badge bg-primary">{{editResource.id}}</span></p>
+  <form>
+      <label><Title></Title> </label>
+      <label>Title </label>
+      <input type="text" name="title" [(ngModel)]="editResource.title" class="form-control" /><br>
+      <label>Description </label>
+      <input type="text" name="description" [(ngModel)]="editResource.description" class="form-control" /><br>
+      <label>Resource URL </label>
+      <input type="text" name="resourceUrl" [(ngModel)]="editResource.resourceUrl" class="form-control" /><br>
+
+      <button type="button" (click)="cancelEdit()" class="btn btn-danger m-2">Cancel</button>
+      <button (click)="updateResource(editResource)" class="btn btn-success">Save</button>
+  </form>
+</div>
+
+<div *ngIf="createForm">
+  <main>
+    <div class="container">
+      <header class="pb-3 border-bottom">
+        <h1 class="display-3">Create Resource</h1>
+        <button *ngIf="!showAllResources" (click)="toggleAllResources()" class="btn btn-primary btn-lg px-4 m-1">All
+          Resources</button>
+      </header>
+      <p class="fs-5 col-md-8">Use this form to create an new resources.</p>
+
+      <form [formGroup]="createResourceForm" (ngSubmit)="sendNewResource()" novalidate>
+        <input type="hidden" value='100' formControlName="id">
+
+        <label for="title" class="form-label"><strong>Title *</strong></label>
+        <input type='text' id="title" placeholder='myResource' class="form-control m-1" formControlName="title" />
+        <div *ngIf="createResourceForm.controls['title'].invalid && (createResourceForm.controls['title'].touched)"
+          class="alert alert-danger">
+          <div *ngIf="createResourceForm.controls['title'].errors">
+            Title is required.
+          </div>
+
+        </div>
+        <label for="description" class="form-label"><strong>Description *</strong></label>
+        <input type='text' id="description" placeholder='myDescription' class="form-control m-1" formControlName="description" />
+        <div *ngIf="createResourceForm.controls['description'].invalid && (createResourceForm.controls['description'].touched)"
+          class="alert alert-danger">
+          <div *ngIf="createResourceForm.controls['description'].errors">
+            Description is required.
+          </div>
+        </div>
+
+        <label for="resourceUrl" class="form-label"><strong>Resource URL </strong></label>
+        <input type='text' formControlName='resourceUrl' id="resourceUrl" class="form-control m-1" />
+        <div *ngIf="createResourceForm.controls['resourceUrl'].invalid && (createResourceForm.controls['resourceUrl'].touched)"
+          class="alert alert-danger">
+          <div *ngIf="createResourceForm.controls['resourceUrl'].errors">
+            Resource URL is required.
+          </div>
+        </div>
+        <br>
+
+        <label for="resourceType" class="form-label"><strong>Resource-Type ID *</strong></label>
+        <input type='text' id="resourceType" placeholder='1' class="form-control m-1" formControlName="resourceType" />
+        <div *ngIf="createResourceForm.controls['resourceType'].invalid && (createResourceForm.controls['resourceType'].touched)"
+          class="alert alert-danger">
+          <div *ngIf="createResourceForm.controls['resourceTypeId'].errors">
+              Resource-Type is required.
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-lg px-4 m-1">Create Resource</button>
+      </form>
+      <footer class="pt-3 mt-4 text-muted border-top">
+        &copy; 2022 SkillGuild
+      </footer>
+    </div>
+  </main>
+</div>

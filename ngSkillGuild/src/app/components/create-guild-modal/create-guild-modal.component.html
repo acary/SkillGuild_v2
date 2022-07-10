@@ -1,0 +1,127 @@
+<ng-template #guildContent let-guildModal>
+  <div class="modal-header">
+    <h2 class="modal-title text-primary mb-auto" id="modal-basic-title">Create a new Guild</h2>
+    <button type="button" class="btn-close" aria-label="Close" (click)="guildModal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form class="form-control">
+      <div class="form-group form-floating mb-3">
+        <input ngbAutofocus type="text" class="form-control" placeholder="Guild Name" name="guildName"
+          [(ngModel)]="guild.name">
+        <label>Guild Name</label>
+      </div>
+      <div class="form-group form-floating mb-3">
+        <input type="text" class="form-control" placeholder="Description" name="description"
+          [(ngModel)]="guild.description">
+        <label>Description</label>
+      </div>
+      <div *ngIf="guild.isPublic; else isPrivate" class="form-group form-check form-switch mb-3 d-flex align-items-center">
+        <input type="checkbox" class="form-check-input" (click)="toggleIsPublic()">
+        <label class="form-check-label">&nbsp;&nbsp;<i class="bi bi-unlock" id="locks"></i> Public</label>
+      </div>
+      <ng-template #isPrivate>
+        <div class="form-group form-check form-switch mb-3 d-flex align-items-center">
+          <input type="checkbox" class="form-check-input" role="switch" checked (click)="toggleIsPublic()">
+          <label class="form-check-label">&nbsp;<i class="bi bi-lock-fill" id="locks"></i> Private</label>
+        </div>
+      </ng-template>
+      <div class="form-group form-floating mb-3">
+        <textarea class="form-control" placeholder="Membership Criteria" name="membershipCriteria" rows="4"
+          style="height: 100%;" [(ngModel)]="guild.membershipCriteria"></textarea>
+        <label>Membership Criteria</label>
+      </div>
+      <br>
+      <div class="d-grid">
+        <button type="button" class="btn btn-outline-primary col-4 mx-auto"
+          (click)="guildModal.close('Save click')">Submit</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #registrationContent let-registrationModal>
+  <div class="modal-header">
+    <h2 class="modal-title text-primary mb-auto" id="modal-basic-title">Register Now</h2>
+    <button type="button" class="btn-close" aria-label="Close"
+      (click)="registrationModal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <p class="text-danger text-center"><strong>Please register an account in order to create a Guild</strong></p>
+    <form class="form-control">
+      <div class="form-group form-floating mb-3">
+        <input ngbAutofocus type="username" class="form-control" placeholder="Enter a username" name="username"
+          [(ngModel)]="newUser.username">
+        <label>Username</label>
+        <!-- <span class="hint alert-success">Enter a username</span> -->
+      </div>
+      <div class="form-group form-floating mb-3">
+        <input type="email" class="form-control" placeholder="Enter email" name="email" [(ngModel)]="newUser.email">
+        <label>Email Address</label>
+        <!-- <span class="hint alert-success">Enter a valid email</span> -->
+      </div>
+      <div class="form-group form-floating mb-3">
+        <input type="password" class="form-control" placeholder="Password" name="password"
+          [(ngModel)]="newUser.password">
+        <label>Password</label>
+        <!-- <span class="hint alert-success">Password should be 8 or more characters </span> -->
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" placeholder="Password">
+        <label>Re-enter Password</label>
+        <!-- <span class="hint alert-success">Re-enter your password</span> -->
+      </div>
+      <div class="d-grid">
+        <button type="button" class="btn btn-outline-primary col-4 mx-auto"
+          (click)="registrationModal.close('Save click')">Register</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a class="mx-auto" (click)="registrationModal.dismiss('cross-click')" (click)="openLogin(loginContent)">Already have
+      an account? Sign-in here.</a>
+  </div>
+</ng-template>
+
+<ng-template #loginContent let-loginModal>
+  <div class="modal-header">
+    <h2 class="modal-title text-primary mb-auto" id="modal-basic-title">Login</h2>
+    <button type="button" class="btn-close" aria-label="Close" (click)="loginModal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form class="form-control">
+      <div class="form-group form-floating mb-3">
+        <input ngbAutofocus type="username" class="form-control" placeholder="Enter a username" name="username"
+          [(ngModel)]="loginUser.username">
+        <label>Username</label>
+      </div>
+      <div class="form-group form-floating mb-3">
+        <input type="password" class="form-control" placeholder="Password" name="password"
+          [(ngModel)]="loginUser.password">
+        <label>Password</label>
+      </div>
+      <div class="form-group form-check mb-3">
+        <input type="checkbox" class="form-check-input">
+        <label class="form-check-label">Remember me</label>
+      </div>
+      <br>
+      <div class="d-grid">
+        <button type="button" class="btn btn-outline-primary col-4 mx-auto"
+          (click)="loginModal.close('Save click')">Login</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a class="mx-auto" (click)="loginModal.dismiss('cross-click')" (click)="openRegistration(registrationContent)">Need
+      an account? Register here.</a>
+  </div>
+</ng-template>
+
+<div *ngIf="loggedIn(); else registrationModal">
+  <button class="btn btn-success my-2" (click)="openCreateGuild(guildContent)">Create a guild <i
+      class="bi bi-plus-circle ml-2"></i></button>
+</div>
+<ng-template #registrationModal>
+  <button class="btn btn-success my-2" (click)="openRegistration(registrationContent)">Create a guild <i
+      class="bi bi-plus-circle ml-2"></i></button>
+
+</ng-template>

@@ -1,0 +1,52 @@
+<div class="row brand-bg">
+  <div class="col-3" style="max-width: 430px;">
+    <div class="card shadow mx-auto">
+      <div class="card-body">
+
+        <div class="text-center"><img *ngIf="user.profileImgUrl; else elseBlock" class="rounded-circle" height="200px"
+            width="200px" src="{{user.profileImgUrl}}" alt=""></div>
+        <ng-template #elseBlock class="text-center">
+          <img class="rounded-circle" height="200px" width="200px" src="/assets/images/default_profile_picture.png"
+            alt="">
+        </ng-template>
+        <br>
+        <div class="d-flex align-items-center">
+          <div class="ml-auto" style="width: 42px;">&nbsp;</div>
+          <div class="mx-auto">
+            <h5 style="margin: 0;">{{user.username}}</h5>
+          </div>
+          <div class="mr-auto">
+            <app-edit-profile-modal></app-edit-profile-modal>
+          </div>
+        </div>
+        <hr>
+        <table>
+          <tr>
+            <td class="card-text"><strong>Name: </strong></td>
+            <td class=" card-text text-center">{{user.firstName}} {{user.lastName}}</td>
+          </tr>
+          <tr>
+            <td><strong>Email:</strong></td>
+            <td class=" card-text text-center">{{user.email}}</td>
+          </tr>
+          <tr>
+            <td><strong>Role:</strong></td>
+            <td class=" card-text text-center">{{user.role}}</td>
+          </tr>
+          <tr>
+            <td style="width: 90px;"><strong>About Me:</strong></td>
+            <td class=" card-text text-center">{{user.aboutMe}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col ">
+    <div class="card shadow mx-auto">
+      <div class="card-body">
+        <app-profile-accordian></app-profile-accordian>
+      </div>
+    </div>
+  </div>
+</div>

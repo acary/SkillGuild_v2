@@ -1,0 +1,144 @@
+<div class="container py-2">
+    <div *ngIf="comments && !createForm && !selected">
+      <h3 class="m-2 display-6">Comments</h3>
+      <button (click)="showCreateForm()" class="btn btn-success btn-lg px-4 m-1">New Comment</button>
+      <hr>
+      <table class="table table-striped table-hover">
+        <thead>
+          <th>ID</th>
+          <th>User</th>
+          <th>Text Content</th>
+          <th>Edited</th>
+          <th>Created</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let comment of comments" (click)="selected = this.comment">
+            <td>{{comment.id}}</td>
+            <td>{{comment.createdByUser.username}}</td>
+            <td>{{comment.textContent}}</td>
+            <td>{{comment.hasBeenEdited}}</td>
+            <td>{{comment.createdOn}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="selected && !editComment">
+      <header class="pb-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+          <a [routerLink]="['/comment']"><button (click)="displayAll()" class="btn btn-primary btn-sm m-2">Back</button></a>
+          <span class="fs-4">Comment</span>
+        </a>
+      </header>
+  
+      <h3 class="m-2 display-6">Comment {{selected.id}}</h3>
+      <hr>
+      <p><span class="badge bg-primary">{{selected.id}}</span></p>
+      <p>Text Content: {{selected.textContent}}</p>
+      <p>In Reply To: {{selected.inReplyTo}}</p>
+      <p>Edited: {{selected.hasBeenEdited}}</p>
+      <p>Created: {{selected.createdOn}}</p>
+      <p>User ID: {{selected.createdByUser.id}}</p>
+      <p>Content ID: {{selected.contentId}}</p>
+      <button (click)="displayAll()" class="btn btn-secondary m-1">Back</button>
+      <button (click)="setEditComment()" class="btn btn-info m-1">Edit</button>
+      <button (click)="deleteComment(selected.id)" class="btn btn-danger m-1">Delete</button>
+    </div>
+  
+    <div *ngIf="!comments">
+      <h3 class="m-2 display-6">Comments</h3>
+      <hr>
+      <p>No comments found</p>
+    </div>
+  </div>
+
+  <div *ngIf="editComment">
+    <p><span class="badge bg-primary">{{editComment.id}}</span></p>
+    <form>
+        <label>Text Content </label>
+        <input type="text" name="textContent" [(ngModel)]="editComment.textContent" class="form-control m-1" /><br>
+        <label>In Reply To </label>
+        <input type="text" name="inReplyTo" [(ngModel)]="editComment.inReplyTo" class="form-control m-1" /><br>
+        <label>Created On </label>
+        <input type="text" name="createdOn" [(ngModel)]="editComment.createdOn" class="form-control m-1" /><br>
+
+        <label>User ID </label>
+        <input type="text" name="userId" [(ngModel)]="editComment.createdByUser" class="form-control m-1" /><br>
+
+        <label>Content ID </label>
+        <input type="text" name="contentId" [(ngModel)]="editComment.contentId" class="form-control m-1" /><br>
+
+        <label>Edited </label>
+        <input type="checkbox" name="edited" [(ngModel)]="editComment.hasBeenEdited" class="m-2" /><br>
+        <button type="button" (click)="cancelEdit()" class="btn btn-danger m-2">Cancel</button>
+        <button (click)="updateComment(editComment)" class="btn btn-success">Save</button>
+    </form>
+  </div>
+
+  <div *ngIf="createForm">
+    <main>
+      <div class="container">
+        <header class="pb-3 border-bottom">
+          <h1 class="display-3">Create Comment</h1>
+          <button *ngIf="!showAllComments" (click)="toggleAllComments()" class="btn btn-primary btn-lg px-4 m-1">All
+            Comments</button>
+        </header>
+        <p class="fs-5 col-md-8">Use this form to create a new comment.</p>
+  
+        <form [formGroup]="createCommentForm" (ngSubmit)="sendNewComment()" novalidate>
+          <input type="hidden" value='100' formControlName="id">
+  
+          <label for="textContent" class="form-label"><strong>Text Content *</strong></label>
+          <input type='text' id="textContent" placeholder='My comment' class="form-control m-1" formControlName="textContent" />
+          <div *ngIf="createCommentForm.controls['textContent'].invalid && (createCommentForm.controls['textContent'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="createCommentForm.controls['textContent'].errors">
+              Username is required.
+            </div>
+          </div>
+  
+          <label for="createdOn" class="form-label"><strong>Created On *</strong></label>
+          <input type='text' id="createdOn" placeholder='' class="form-control m-1" formControlName="createdOn" />
+          <div *ngIf="createCommentForm.controls['createdOn'].invalid && (createCommentForm.controls['createdOn'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="createCommentForm.controls['createdOn'].errors">
+              Created on is required.
+            </div>
+          </div>
+
+          <label for="userId" class="form-label"><strong>User ID *</strong></label>
+          <input type='text' id="userId" placeholder='' class="form-control m-1" formControlName="userId" />
+          <div *ngIf="createCommentForm.controls['userId'].invalid && (createCommentForm.controls['userId'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="createCommentForm.controls['userId'].errors">
+              User ID is required.
+            </div>
+          </div>
+
+          <label for="contentId" class="form-label"><strong>Content ID *</strong></label>
+          <input type='text' id="contentId" placeholder='' class="form-control m-1" formControlName="contentId" />
+          <div *ngIf="createCommentForm.controls['contentId'].invalid && (createCommentForm.controls['contentId'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="createCommentForm.controls['contentId'].errors">
+              Content ID is required.
+            </div>
+          </div>
+  
+          <label for="hasBeenEdited" class="form-label"><strong>Edited </strong></label>
+          <input type='checkbox' formControlName='hasBeenEdited' id="hasBeenEdited" class="m-1" />
+          <div *ngIf="createCommentForm.controls['hasBeenEdited'].invalid && (createCommentForm.controls['hasBeenEdited'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="createCommentForm.controls['hasBeenEdited'].errors">
+              Edited is required.
+            </div>
+          </div>
+          <br>
+  
+          <button type="submit" class="btn btn-success btn-lg px-4 m-1">Create Comment</button>
+        </form>
+        <footer class="pt-3 mt-4 text-muted border-top">
+          &copy; 2022 SkillGuild
+        </footer>
+      </div>
+    </main>
+  </div>
