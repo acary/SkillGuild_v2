@@ -1,4 +1,4 @@
-# SkillGuild
+# SkillGuild v2
 
 [![Generic badge](https://img.shields.io/badge/Status-MVP-Green.svg)](https://shields.io/)
 
@@ -11,6 +11,8 @@
 SkillGuild is a platform that encourages continuous learning, knowledge-sharing and career growth for professionals and teams through relevant, specific and actionable presentations to interested peers.
 
 The application consists of an Angular (13.3) frontend with Spring Boot API and Java Persistence Application (JPA) with a MySQL database.
+
+This version (v2) is in a separate repository to continue independently developing features, add unit testing, etc.
 
 ### Screenshots
 
@@ -132,6 +134,10 @@ Prefix: `/v1/`
 
 ### Authors
 
+v2:
+- Andy Cary (@acary)
+
+v1 (May to June, 2022):
 - Andy Cary (@acary)
 - Austin Lambert (@aslusaf)
 - Alex Trill (@AlexTrill)
