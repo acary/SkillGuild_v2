@@ -44,7 +44,7 @@ class GuildTest {
 	@Test
 	void test_entity() {
 		assertNotNull(guild);
-		assertEquals("Frontend Development", guild.getName());
+		assertEquals("Code Brains", guild.getName());
 	}
 
 }

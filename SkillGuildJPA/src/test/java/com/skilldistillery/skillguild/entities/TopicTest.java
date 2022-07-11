@@ -44,7 +44,7 @@ class TopicTest {
 	@Test
 	void test_entity() {
 		assertNotNull(topic);
-		assertEquals("Frontend", topic.getName()); //DB entry has an extra space after Frontend
+		assertEquals("Frontend Web Development", topic.getName()); //DB entry has an extra space after Frontend
 	}
 
 }

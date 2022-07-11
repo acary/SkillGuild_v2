@@ -43,7 +43,7 @@ class UserTest {
 	@Test
 	void test() {
 		assertNotNull(user);
-		assertEquals("admin", user.getUsername());
+		assertEquals("admin1", user.getUsername());
 	}
 
 }
