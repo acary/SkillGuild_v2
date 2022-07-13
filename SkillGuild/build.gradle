@@ -1,9 +1,12 @@
 plugins {
 	id 'org.springframework.boot' version '2.7.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "net.serenity-bdd.serenity-gradle-plugin" version "3.2.4"
 	id 'java'
 	id 'war'
 }
+
+defaultTasks 'clean', 'test', 'aggregate'
 
 war {
   archiveFileName = "${archivesBaseName}.war"
@@ -13,6 +16,16 @@ war {
 group = 'com.skilldistillery.skillguild'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+ext {
+	slf4jVersion = '1.7.7'
+	serenityCoreVersion = '3.2.4'
+	junitVersion = '5.8.2'
+	assertJVersion = '3.22.0'
+	logbackVersion = '1.2.11'
+	lombokVersion = '1.18.24'
+}
 
 repositories {
 	mavenCentral()
@@ -34,10 +47,19 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'io.cucumber:cucumber-java:7.0.0'
+	testImplementation "net.serenity-bdd:serenity-core:${serenityCoreVersion}",
+			"net.serenity-bdd:serenity-junit5:${serenityCoreVersion}",
+			"org.junit.jupiter:junit-jupiter-api:${junitVersion}",
+			"org.junit.jupiter:junit-jupiter-engine:${junitVersion}",
+			"org.assertj:assertj-core:${assertJVersion}",
+			"org.projectlombok:lombok:${lombokVersion}",
+			"ch.qos.logback:logback-classic:${logbackVersion}"
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+	testLogging.showStandardStreams = true
+	systemProperties System.getProperties()
 }
 
 task cucumber() {
@@ -50,3 +72,17 @@ task cucumber() {
         }
     }
 }
+
+gradle.startParameter.continueOnFailure = true
+
+serenity {
+	reports = ["single-page-html"]
+
+	// Specify the root package of any JUnit acceptance tests
+	testRoot="starter"
+
+	// Specify the root directory of any Cucumber feature files
+	requirementsDir = "src/test/resources/features"
+}
+
+test.finalizedBy(aggregate)
