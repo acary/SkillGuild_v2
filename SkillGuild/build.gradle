@@ -82,7 +82,7 @@ serenity {
 	testRoot="starter"
 
 	// Specify the root directory of any Cucumber feature files
-	requirementsDir = "src/test/resources/features"
+	requirementsDir = "src/test/resources/bdd"
 }
 
 test.finalizedBy(aggregate)
