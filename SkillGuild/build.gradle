@@ -68,21 +68,11 @@ task cucumber() {
         javaexec {
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'bdd', 'src/test/resources']
+            args = ['--plugin', 'pretty', '--glue', 'bdd', 'src/test/resources/features']
         }
     }
 }
 
 gradle.startParameter.continueOnFailure = true
-
-serenity {
-	reports = ["single-page-html"]
-
-	// Specify the root package of any JUnit acceptance tests
-	testRoot="starter"
-
-	// Specify the root directory of any Cucumber feature files
-	requirementsDir = "src/test/resources/bdd"
-}
 
 test.finalizedBy(aggregate)
