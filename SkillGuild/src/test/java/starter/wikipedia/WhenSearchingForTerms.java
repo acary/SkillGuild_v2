@@ -1,15 +1,14 @@
 package starter.wikipedia;
 
-import net.serenitybdd.core.Serenity;
-import net.serenitybdd.core.steps.UIInteractionSteps;
-import net.serenitybdd.junit5.SerenityJUnit5Extension;
-import net.thucydides.core.annotations.Managed;
-import net.thucydides.core.annotations.SingleBrowser;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import net.serenitybdd.core.Serenity;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
+import net.thucydides.core.annotations.Managed;
 
 @ExtendWith(SerenityJUnit5Extension.class)
 class WhenSearchingForTerms {
@@ -39,9 +38,9 @@ class WhenSearchingForTerms {
     @Test
     void searchBySingleKeyword() {
         navigate.toTheHomePage();
-        search.searchBy("Everest");
-        Serenity.reportThat("The first heading should be 'Mount Everest'",
-                () -> assertThat(displayedArticle.getFirstHeading()).isEqualTo("Mount Everest")
+        search.searchBy("software developer");
+        Serenity.reportThat("The first heading should be 'Programmer'",
+                () -> assertThat(displayedArticle.getFirstHeading()).isEqualTo("Programmer")
         );
     }
 }
