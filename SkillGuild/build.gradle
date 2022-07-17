@@ -49,8 +49,7 @@ dependencies {
 	testImplementation 'io.cucumber:cucumber-java:7.0.0'
 	testImplementation "net.serenity-bdd:serenity-core:${serenityCoreVersion}",
 			"net.serenity-bdd:serenity-junit5:${serenityCoreVersion}",
-			"org.junit.jupiter:junit-jupiter-api:${junitVersion}",
-			"org.junit.jupiter:junit-jupiter-engine:${junitVersion}",
+			"org.junit.jupiter:junit-jupiter:${junitVersion}",
 			"org.assertj:assertj-core:${assertJVersion}",
 			"org.projectlombok:lombok:${lombokVersion}",
 			"ch.qos.logback:logback-classic:${logbackVersion}"
