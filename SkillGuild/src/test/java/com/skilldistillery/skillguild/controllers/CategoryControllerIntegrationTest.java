@@ -1,7 +1,8 @@
 package com.skilldistillery.skillguild.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
@@ -29,10 +30,10 @@ public class CategoryControllerIntegrationTest {
 	CategoryService categoryService;
 
 	@Mock
-	MockHttpServletRequest req;
+	MockHttpServletRequest req = new MockHttpServletRequest();
 
 	@Mock
-	MockHttpServletResponse res;
+	MockHttpServletResponse res = new MockHttpServletResponse();
 
 	@InjectMocks
 	CategoryController categoryController;
@@ -49,10 +50,10 @@ public class CategoryControllerIntegrationTest {
 		when(this.categoryService.create(any(Category.class))).thenReturn(category);
 
 		// when
-		Category newCategory = categoryController.create(req, res, category);
+		categoryController.create(req, res, null);
 
 		// then
-		assertNotNull(newCategory.getName());
+		verify(categoryService, times(1)).create(null);
 	}
 
 }
