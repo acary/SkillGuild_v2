@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -109,7 +110,7 @@ class CategoryControllerUnitTest {
 		verify(categoryService, times(1)).create(any(Category.class));
 		verifyNoMoreInteractions(categoryService);
 	}
-	
+
 	@DisplayName("When delete category by ID, delete and return boolean")
 	@Test
 	void wheDeleteCategoryById_thenDeleteAndReturnBoolean() throws Exception {
@@ -121,6 +122,28 @@ class CategoryControllerUnitTest {
 
 		// then
 		verify(categoryService, times(1)).delete(any(Integer.class));
+		verifyNoMoreInteractions(categoryService);
+	}
+
+	@DisplayName("When updating category by ID, update and return Category")
+	@Test
+	void whenPutCategory_thenUpdateAndReturnCategory() throws Exception {
+		// given
+		Category category = new Category();
+		category.setId(1);
+		category.setName("Data Engineering");
+		category.setDescription("Activities and interests related to the Data Engineering discipline");
+		category.setImgUrl("https://images.unsplash.com/photo-1573495627361-d9b87960b12d");
+		when(categoryService.update(any(Integer.class), any(Category.class))).thenReturn(category);
+
+		// when
+		MediaType MEDIA_TYPE_JSON_UTF8 = new MediaType("application", "json",
+				java.nio.charset.Charset.forName("UTF-8"));
+		mockMvc.perform(put("/v1/categories/1").accept(MEDIA_TYPE_JSON_UTF8).content(convertObjectToJsonBytes(category))
+				.contentType(MEDIA_TYPE_JSON_UTF8)).andDo(print()).andReturn();
+
+		// then
+		verify(categoryService, times(1)).update(any(Integer.class), any(Category.class));
 		verifyNoMoreInteractions(categoryService);
 	}
 
