@@ -5,6 +5,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -108,9 +109,24 @@ class CategoryControllerUnitTest {
 		verify(categoryService, times(1)).create(any(Category.class));
 		verifyNoMoreInteractions(categoryService);
 	}
+	
+	@DisplayName("When delete category by ID, delete and return boolean")
+	@Test
+	void wheDeleteCategoryById_thenDeleteAndReturnBoolean() throws Exception {
+		// given
+		when(categoryService.delete(any(Integer.class))).thenReturn(true);
+
+		// when
+		mockMvc.perform(delete("/v1/categories/1")).andDo(print()).andReturn();
+
+		// then
+		verify(categoryService, times(1)).delete(any(Integer.class));
+		verifyNoMoreInteractions(categoryService);
+	}
 
 	private static byte[] convertObjectToJsonBytes(Object object) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsBytes(object);
 	}
+
 }
