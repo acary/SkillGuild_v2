@@ -8,15 +8,12 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -97,7 +94,7 @@ class InteractionTypeControllerTest {
 
 	@DisplayName("When delete interactiontype by ID, delete and return")
 	@Test
-	void wheDeleteInteractionTypeById_thenDeleteAndReturn() throws Exception {
+	void whenDeleteInteractionTypeById_thenDeleteAndReturn() throws Exception {
 		// given
 		when(interactionTypeService.delete(any(Integer.class))).thenReturn(true);
 
