@@ -38,7 +38,7 @@ import com.skilldistillery.skillguild.services.CategoryService;
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-class CategoryControllerUnitTest {
+class CategoryControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
