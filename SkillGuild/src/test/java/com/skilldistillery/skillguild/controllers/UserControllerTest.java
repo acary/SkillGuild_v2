@@ -95,6 +95,24 @@ class UserControllerTest {
 		verify(userService, times(1)).show(any(Integer.class), any(String.class));
 		verifyNoMoreInteractions(userService);
 	}
+	
+	@DisplayName("When getByCredentials, return User profile")
+	@Test
+	@WithMockUser(username = "SkillGuildUser")
+	void getByCredentials_shouldReturn_UserProfile() throws Exception {
+		// given
+		User user = new User();
+		user.setId(1);
+		user.setEmail("engineering@skillguild.app");
+		when(userService.showProfile(any(String.class))).thenReturn(user);
+
+		// when
+		mockMvc.perform(get("/v1/users/profile").contentType("text/plain")).andDo(print()).andReturn();
+
+		// then
+		verify(userService, times(1)).showProfile(any(String.class));
+		verifyNoMoreInteractions(userService);
+	}
 
 	@Disabled
 	@DisplayName("When post to users, create and return User")
@@ -151,6 +169,27 @@ class UserControllerTest {
 
 		// then
 		verify(userService, times(1)).updateAsAdmin(any(Integer.class), any(User.class), any(String.class));
+		verifyNoMoreInteractions(userService);
+	}
+	
+	@DisplayName("When editprofile, updateAsUser and return User")
+	@Test
+	@WithMockUser(username = "SkillGuildUser")
+	void whenEditProfile_thenUpdateAsUserAndReturnUser() throws Exception {
+		// given
+		User user = new User();
+		user.setId(1);
+		user.setEmail("engineering@skillguild.app");
+		when(userService.updateAsUser(any(User.class), any(String.class))).thenReturn(user);
+
+		// when
+		MediaType MEDIA_TYPE_JSON_UTF8 = new MediaType("application", "json",
+				java.nio.charset.Charset.forName("UTF-8"));
+		mockMvc.perform(put("/v1/users/editprofile").accept(MEDIA_TYPE_JSON_UTF8).content(convertObjectToJsonBytes(user))
+				.contentType(MEDIA_TYPE_JSON_UTF8)).andDo(print()).andReturn();
+
+		// then
+		verify(userService, times(1)).updateAsUser(any(User.class), any(String.class));
 		verifyNoMoreInteractions(userService);
 	}
 
