@@ -57,25 +57,6 @@ public class CommentController {
 		
 		return comments;
 	}
-
-//	@PostMapping("users/{uid}/contents/{contentId}/comments")
-//	public Comment create(HttpServletRequest req, HttpServletResponse res, @PathVariable int uid,
-//			@PathVariable int contentId, @RequestBody Comment comment) {
-//
-//		try {
-//			commentServ.create(uid, contentId, comment);
-//			res.setStatus(201);
-//			StringBuffer url = req.getRequestURL().append("/").append(comment.getId());
-//			res.setHeader("Location", url.toString());
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			res.setStatus(400);
-//
-//		}
-//
-//		return comment;
-//
-//	}
 	
 	@PostMapping("contents/{contentId}/comments")
 	public Comment create(Principal principal, HttpServletRequest req, HttpServletResponse res,
@@ -100,7 +81,7 @@ public class CommentController {
 	public Comment update(HttpServletRequest req, HttpServletResponse res, @PathVariable int cid,
 			@RequestBody Comment comment) {
 
-		System.out.println("*** Comment: " + comment);
+		// System.out.println("*** Comment: " + comment);
 		Comment newComment;
 		try {
 			newComment = commentServ.update(cid, comment);

@@ -12,10 +12,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,6 +29,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,6 +55,9 @@ class CommentControllerTest {
 
 	@Mock
 	private Comment comment;
+	
+	@Mock
+	Principal principal = new PrincipalImpl();
 
 	@DisplayName("When calling index, return list of Comments")
 	@Test
@@ -90,21 +94,22 @@ class CommentControllerTest {
 		verifyNoMoreInteractions(commentService);
 	}
 
-	@Disabled // Requires authentication
 	@DisplayName("When post to comments, create and return Comment")
 	@Test
+	@WithMockUser(username = "SkillGuildUser")
 	void whenPostComment_thenCreateAndReturnComment() throws Exception {
 		// given
 		Comment comment = new Comment();
 		comment.setId(1);
-		comment.setTextContent("Software Architecture");
+		comment.setTextContent("Interesting, informative and helpful!");
 		when(commentService.create(any(Integer.class), any(Comment.class), any(String.class))).thenReturn(comment);
 
 		// when
 		MediaType MEDIA_TYPE_JSON_UTF8 = new MediaType("application", "json",
 				java.nio.charset.Charset.forName("UTF-8"));
-		mockMvc.perform(post("/v1/contents/1/comments").accept(MEDIA_TYPE_JSON_UTF8).content(convertObjectToJsonBytes(comment))
-				.contentType(MEDIA_TYPE_JSON_UTF8)).andDo(print()).andReturn();
+		mockMvc.perform(post("/v1/contents/1/comments").principal(principal).accept(MEDIA_TYPE_JSON_UTF8)
+				.content(convertObjectToJsonBytes(comment)).contentType(MEDIA_TYPE_JSON_UTF8)).andDo(print())
+				.andReturn();
 
 		// then
 		verify(commentService, times(1)).create(any(Integer.class), any(Comment.class), any(String.class));
@@ -148,6 +153,13 @@ class CommentControllerTest {
 	private static byte[] convertObjectToJsonBytes(Object object) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsBytes(object);
+	}
+
+	class PrincipalImpl implements Principal {
+		@Override
+		public String getName() {
+			return "SkillGuildUser";
+		}
 	}
 
 }
