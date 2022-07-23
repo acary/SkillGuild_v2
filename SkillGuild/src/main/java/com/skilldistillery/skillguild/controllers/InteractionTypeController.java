@@ -32,8 +32,8 @@ public class InteractionTypeController {
 	}
 
 
-	@PostMapping("interactiontypes")
-	public InteractionType create(HttpServletRequest req, HttpServletResponse res, @PathVariable int rtid,
+	@PostMapping("interactiontypes/{id}")
+	public InteractionType create(HttpServletRequest req, HttpServletResponse res, @PathVariable int id,
 			@RequestBody InteractionType interactionType) {
 		try {
 			itServ.create(interactionType);
@@ -48,11 +48,11 @@ public class InteractionTypeController {
 	}
 	
 
-	@DeleteMapping("interactionTypes/{cid}")
-	public void delete(HttpServletRequest req, HttpServletResponse res, @PathVariable int itIid) {
+	@DeleteMapping("interactiontypes/{id}")
+	public void delete(HttpServletRequest req, HttpServletResponse res, @PathVariable int id) {
 
 		try {
-			if (itServ.delete(itIid)) {
+			if (itServ.delete(id)) {
 
 				res.setStatus(204);
 			} else {
