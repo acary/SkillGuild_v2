@@ -151,7 +151,7 @@
                 </div>
 
 
-                 <label for="isPublic" class="form-label"><strong>Is Public *</strong></label>
+                <label for="isPublic" class="form-label"><strong>Is Public *</strong></label>
                 <input type='checkbox' formControlName='isPublic' id="isPublic" class="m-1" />
                 <div *ngIf="createContentForm.controls['isPublic'].invalid && (createContentForm.controls['isPublic'].touched)"
                     class="alert alert-danger">
@@ -180,13 +180,13 @@
     </main>
 </div>
 
-    <!-- Content -->
+<!-- Content -->
+<div class="container-fluid brand-bg">
     <div *ngIf="selectedContent" class="brand-bg">
         <section class="py-5 text-center container brand-bg"
             style="background-image: url('assets/images/doctype-hi-res_3.jpg'); background-size: cover; background-position:center; height: auto; width: auto;">
-            <!-- style="background-image: url('https://images.unsplash.com/3/doctype-hi-res.jpg'); background-size: cover; background-position:center; height: auto; width: auto;"> -->
             <div class="row py-lg-5">
-                <div class="content-banner col-lg-6 col-md-8 mx-auto">
+                <div class="content-banner rounded col-lg-6 col-md-8 mx-auto">
                     <h1 class="fw-light">{{selectedContent.title}}</h1>
                     <small class="text-muted line-clamp">{{selectedContent.description}}</small><br>
                 </div>
@@ -198,12 +198,15 @@
                     <div class="col col-sm-12 col-lg-8">
                         <h1 class="fw-light">{{selectedContent.title}}</h1>
                         <span class="lead">{{selectedContent.description}}</span><br>
-                        <span class="text-muted"><small>By {{selectedContent.createdByUser.username}} on {{selectedContent.presentationDate | date}} <span *ngIf="selectedContent.topics[0]">about {{ selectedContent.topics[0]?.name }}</span></small></span><br>
+                        <span class="text-muted"><small>By {{selectedContent.createdByUser.username}} on
+                                {{selectedContent.presentationDate | date}} <span
+                                    *ngIf="selectedContent.topics[0]"></span></small></span><br>
                         <hr class="my-3">
                         <!-- Resources-->
                         <h5 class="mt-2">Content Resources</h5>
                         <ngb-accordion #acc="ngbAccordion" class="my-2">
-                            <ngb-panel id="toggle-1" title="{{ selectedContent.resources[0].title }}" *ngIf="selectedContent.resources[0]">
+                            <ngb-panel id="toggle-1" title="{{ selectedContent.resources[0].title }}"
+                                *ngIf="selectedContent.resources[0]">
                                 <ng-template ngbPanelContent>
                                     <div>
                                         <!-- <p class="fw-bold">{{ selectedContent.resources[0].title }}</p> -->
@@ -213,7 +216,8 @@
                                     </div>
                                 </ng-template>
                             </ngb-panel>
-                            <ngb-panel id="toggle-2" title="{{ selectedContent.resources[1].title }}" *ngIf="selectedContent.resources[1]">
+                            <ngb-panel id="toggle-2" title="{{ selectedContent.resources[1].title }}"
+                                *ngIf="selectedContent.resources[1]">
                                 <ng-template ngbPanelContent>
                                     <div>
                                         <!-- <p class="fw-bold">{{ selectedContent.resources[1].title }}</p> -->
@@ -223,7 +227,8 @@
                                     </div>
                                 </ng-template>
                             </ngb-panel>
-                            <ngb-panel id="toggle-3" title="{{ selectedContent.resources[2].title }}" *ngIf="selectedContent.resources[2]">
+                            <ngb-panel id="toggle-3" title="{{ selectedContent.resources[2].title }}"
+                                *ngIf="selectedContent.resources[2]">
                                 <ng-template ngbPanelContent>
                                     <div>
                                         <!-- <p class="fw-bold">{{ selectedContent.resources[2].title }}</p> -->
@@ -233,7 +238,8 @@
                                     </div>
                                 </ng-template>
                             </ngb-panel>
-                            <ngb-panel id="toggle-4" title="{{ selectedContent.resources[3].title }}" *ngIf="selectedContent.resources[3]">
+                            <ngb-panel id="toggle-4" title="{{ selectedContent.resources[3].title }}"
+                                *ngIf="selectedContent.resources[3]">
                                 <ng-template ngbPanelContent>
                                     <div>
                                         <!-- <p class="fw-bold">{{ selectedContent.resources[3].title }}</p> -->
@@ -298,10 +304,12 @@
                                     <div>
                                         <h6 class="mb-0">Description</h6>
                                         <p class="mb-0 opacity-75">{{selectedContent.description}}</p>
-                                        <p class="my-2"><small>Share: <code><a href="{{ this.shareUrl }}" target="_blank">{{ this.shareUrl }}</a></code></small></p>
+                                        <p class="my-2"><small>Share:
+                                                <code><a href="{{ this.shareUrl }}" target="_blank">{{ this.shareUrl }}</a></code></small>
+                                        </p>
                                     </div>
-                                    <small class="opacity-75 text-nowrap">{{ selectedContent.topics[0]?.name }}</small>
                                 </div>
+                                <small class="opacity-75 text-wrap">{{ selectedContent.topics[0]?.name }}</small>
                             </span>
                             <span class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                                 <div class="d-flex gap-2 w-100 justify-content-between">
@@ -344,8 +352,11 @@
 
                         <!-- Comments -->
                         <div class="hstack gap-3 mt-4 mb-2">
-                            <span class="mt-2"><h6><i class="bi bi-chat-right-text-fill align-middle"></i>  Comments</h6></span>
-                            <app-comment-modal [selectedContentId]="selectedContent.id" class="align-middle ms-auto"></app-comment-modal>
+                            <span class="mt-2">
+                                <h6><i class="bi bi-chat-right-text-fill align-middle"></i> Comments</h6>
+                            </span>
+                            <app-comment-modal [selectedContentId]="selectedContent.id" class="align-middle ms-auto">
+                            </app-comment-modal>
                         </div>
                         <div *ngIf="comments" class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
                             <div *ngFor="let comment of comments"
@@ -368,3 +379,4 @@
             </div>
         </div>
     </div>
+</div>

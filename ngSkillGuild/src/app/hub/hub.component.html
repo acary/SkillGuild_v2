@@ -4,7 +4,6 @@
     <div>
       <section class="py-5 text-center container brand-bg"
         style="background-image: url('assets/images/gl.jpg'); background-size: cover; background-position:center; height: auto; width: auto;">
-        <!-- style="background-image: url('https://images.unsplash.com/3/doctype-hi-res.jpg'); background-size: cover; background-position:center; height: auto; width: auto;"> -->
         <div class="row py-lg-5">
           <div class="content-banner rounded col-lg-6 col-md-8 mx-auto">
             <h1 class="fw-light">Find your guild</h1>
@@ -56,23 +55,25 @@
           </app-create-content-modal>
           <app-login-registration-modal *ngIf="!this.checkLogin()"></app-login-registration-modal>
           <br>
-          <button (click)="joinGuild(this.selectedGuild.id, this.user.id)" class="btn btn-sm btn-primary my-2"
-            *ngIf="this.checkLogin() && !this.memberOfGuild">Join</button>
+          <button (click)="joinGuild(this.selectedGuild.id, this.user.id)" class="btn btn-primary btn-lg my-2"
+            *ngIf="this.checkLogin() && !this.memberOfGuild">Join {{selectedGuild.name}}</button>
         </div>
       </div>
     </section>
     <div class="brand-bg album py-2" *ngIf="selectedGuild">
       <div class="container">
         <div class="row">
-          <div>
+          <div class="col col-sm-12 col-lg-3">
             <button (click)="displayAllGuilds()" class="btn btn-primary btn-sm mb-1">Back</button>
           </div>
-          <div class="brand-bg album py-1 col-8">
+        </div>
+        <div class="row">
+          <div class="brand-bg album py-1">
             <!-- Content List -->
-            <div class="container" style="padding: 0;">
+            <div>
               <h5 class="my-2">Available Content</h5>
               <div *ngIf="contents" class="row">
-                <div *ngFor="let content of (contents)" class="col col-lg-6 col-md-12 col-sm-12"
+                <div *ngFor="let content of (contents)" class="col-sm-12 col-lg-4"
                   (click)="selectContent(content.id)">
                   <div class="card shadow-sm">
                     <img src="{{guildImgArr[selectedGuild.id - 1] || this.defaultImage}}" class="content-img">
@@ -101,7 +102,7 @@
             </div>
           </div>
           <!-- Content Details-->
-          <div class="col-4 align-top">
+          <div class="align-top col col-sm-12 col-lg-12">
             <h6 class="mt-3">About {{ selectedGuild.name }}</h6>
             <!-- Details -->
             <div class="list-group w-auto">
