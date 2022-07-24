@@ -34,7 +34,7 @@
     </div>
   </div>
   <ng-template #hasAccountNavBar>
-    <div *ngIf="(loggedIn()); else noAccountNavBar">
+    <div *ngIf="(loggedIn()); else noAccountNavBar" class="container-fluid">
       <a class="navbar-brand" [routerLink]="['/home']"><i class="bi bi-house-fill"></i> SkillGuild</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
