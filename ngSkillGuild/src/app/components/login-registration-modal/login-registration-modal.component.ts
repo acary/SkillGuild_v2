@@ -23,18 +23,21 @@ export class LoginRegistrationModalComponent implements OnInit {
 
   closeResult = '';
 
+  errorMessage: string = '';
+
   constructor(
     private modalService: NgbModal,
     private auth: AuthService,
     private router: Router,
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   openLogin(content: any) {
     this.modalService
       .open(content, {
         ariaLabelledBy: 'modal-basic-title',
+        centered: true,
         windowClass: 'dark-modal',
       })
       .result.then(
@@ -64,11 +67,28 @@ export class LoginRegistrationModalComponent implements OnInit {
         this.router.navigateByUrl('/profile');
       },
       error: (fail) => {
-        console.error('LoginComponent.login(); login failed');
-        console.error(fail);
+        this.errorMessage = 'Login failed. Please try again.';
+        console.error(this.errorMessage);
+        this.openError(this.errorMessage);
       },
     });
+  }
 
+  openError(content: any) {
+    this.modalService
+      .open(content, {
+        ariaLabelledBy: 'modal-basic-title',
+        centered: true,
+        windowClass: 'dark-modal',
+      })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
   }
 
   registerUser(newUser: User): void {
@@ -95,6 +115,7 @@ export class LoginRegistrationModalComponent implements OnInit {
     this.modalService
       .open(content, {
         ariaLabelledBy: 'modal-basic-title',
+        centered: true,
         windowClass: 'dark-modal',
       })
       .result.then(

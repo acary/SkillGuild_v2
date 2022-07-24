@@ -1,6 +1,6 @@
 
-<nav class="navbar navbar-expand-lg">
-  <div *ngIf="((isAdmin())); else hasAccountNavBar" class="container-fluid">
+<nav class="navbar navbar-expand-lg container-fluid">
+  <div *ngIf="((isAdmin())); else hasAccountNavBar">
     <a class="navbar-brand brand" [routerLink]="['/home']"><i class="bi bi-house-fill"></i> SkillGuild</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,7 @@
     </div>
   </div>
   <ng-template #hasAccountNavBar>
-    <div *ngIf="(loggedIn()); else noAccountNavBar" class="container-fluid">
+    <div *ngIf="(loggedIn()); else noAccountNavBar">
       <a class="navbar-brand" [routerLink]="['/home']"><i class="bi bi-house-fill"></i> SkillGuild</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,7 @@
     </div>
   </ng-template>
 
-  <ng-template #noAccountNavBar class="container-fluid">
+  <ng-template #noAccountNavBar>
     <a class="navbar-brand" [routerLink]="['/home']"><i class="bi bi-house-fill"></i> SkillGuild</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
