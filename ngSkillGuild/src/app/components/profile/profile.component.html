@@ -1,56 +1,60 @@
-<div class="container-fluid brand-bg">
-  <h5>My Profile</h5>
-  <div class="row">
-    <div class="col col-sm-12 col-lg-3" style="max-width: 430px;">
-      <div class="card shadow mx-auto">
-        <div class="card-body">
+<div class="album py-2 brand-bg">
+  <div class="container">
+      <h5>My Profile</h5>
+    <div class="row">
 
-          <div class="text-center"><img *ngIf="user.profileImgUrl; else elseBlock" class="rounded-circle" height="200px"
-              width="200px" src="{{user.profileImgUrl}}" alt="{{user.username}}"></div>
-          <ng-template #elseBlock class="text-center">
-            <img class="rounded-circle" height="200px" width="200px" src="/assets/images/default_profile_picture.png"
-              alt="Default Photo">
-          </ng-template>
-          <br>
-          <div class="d-flex align-items-center">
-            <div class="ml-auto" style="width: 42px;">&nbsp;</div>
-            <div class="mx-auto">
-              <h6>{{user.username}}</h6>
-            </div>
+      <div class="col col-lg-4 mx-auto">
+        <div class="card shadow">
+          <div class="card-body">
+
+            <div class="text-center"><img *ngIf="user.profileImgUrl; else elseBlock" class="rounded-circle"
+                height="200px" width="200px" src="{{user.profileImgUrl}}" alt="{{user.username}}"></div>
+            <ng-template #elseBlock class="text-center">
+              <img class="rounded-circle" height="200px" width="200px" src="/assets/images/default_profile_picture.png"
+                alt="Default Photo">
+            </ng-template>
             <br>
-            <div class="mr-auto">
-              <app-edit-profile-modal></app-edit-profile-modal>
+            <div class="d-flex align-items-center">
+              <div class="ml-auto" style="width: 42px;">&nbsp;</div>
+              <div class="mx-auto">
+                <h6>{{user.username}}</h6>
+              </div>
+              <br>
+              <div class="mr-auto">
+                <app-edit-profile-modal></app-edit-profile-modal>
+              </div>
             </div>
+            <hr>
+            <table>
+              <tr>
+                <td class="card-text"><strong>Name</strong></td>
+                <td class=" card-text">{{user.firstName}} {{user.lastName}}</td>
+              </tr>
+              <tr>
+                <td><strong>Email</strong></td>
+                <td class=" card-text">{{user.email}}</td>
+              </tr>
+              <tr>
+                <td style="width: 90px;"><strong>About</strong></td>
+                <td class=" card-text">{{user.aboutMe}}</td>
+              </tr>
+              <tr>
+                <td><strong>Role</strong></td>
+                <td class=" card-text">{{user.role}}</td>
+              </tr>
+            </table>
           </div>
-          <hr>
-          <table>
-            <tr>
-              <td class="card-text"><strong>Name</strong></td>
-              <td class=" card-text">{{user.firstName}} {{user.lastName}}</td>
-            </tr>
-            <tr>
-              <td><strong>Email</strong></td>
-              <td class=" card-text">{{user.email}}</td>
-            </tr>
-            <tr>
-              <td style="width: 90px;"><strong>About</strong></td>
-              <td class=" card-text">{{user.aboutMe}}</td>
-            </tr>
-            <tr>
-              <td><strong>Role</strong></td>
-              <td class=" card-text">{{user.role}}</td>
-            </tr>
-          </table>
         </div>
       </div>
-    </div>
 
-    <div class="col col-sm-12 col-lg-9">
-      <div class="card shadow mx-auto">
-        <div class="card-body">
-          <app-profile-accordian></app-profile-accordian>
-        </div>
+      <div class="col col-lg-8 mx-auto">
+        <!-- <div class="card shadow mx-auto">
+            <div class="card-body"> -->
+        <app-profile-accordian></app-profile-accordian>
+        <!-- </div>
+          </div> -->
       </div>
+
     </div>
   </div>
 </div>
