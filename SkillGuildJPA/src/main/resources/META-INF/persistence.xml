@@ -5,20 +5,20 @@
 	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     
     <!-- Begin Entities Here -->
-    <class>com.skilldistillery.skillguild.entities.Category</class>
-    <class>com.skilldistillery.skillguild.entities.Comment</class>
-    <class>com.skilldistillery.skillguild.entities.Content</class>
-    <class>com.skilldistillery.skillguild.entities.Guild</class>
-    <class>com.skilldistillery.skillguild.entities.Interaction</class>
-    <class>com.skilldistillery.skillguild.entities.InteractionType</class>
-    <class>com.skilldistillery.skillguild.entities.Member</class>
-    <class>com.skilldistillery.skillguild.entities.MemberId</class>
-    <class>com.skilldistillery.skillguild.entities.Question</class>
-    <class>com.skilldistillery.skillguild.entities.Resource</class>
-    <class>com.skilldistillery.skillguild.entities.ResourceType</class>
-    <class>com.skilldistillery.skillguild.entities.Status</class>
-    <class>com.skilldistillery.skillguild.entities.Topic</class>
-    <class>com.skilldistillery.skillguild.entities.User</class>
+    <class>com.skillguildapp.skillguild.entities.Category</class>
+    <class>com.skillguildapp.skillguild.entities.Comment</class>
+    <class>com.skillguildapp.skillguild.entities.Content</class>
+    <class>com.skillguildapp.skillguild.entities.Guild</class>
+    <class>com.skillguildapp.skillguild.entities.Interaction</class>
+    <class>com.skillguildapp.skillguild.entities.InteractionType</class>
+    <class>com.skillguildapp.skillguild.entities.Member</class>
+    <class>com.skillguildapp.skillguild.entities.MemberId</class>
+    <class>com.skillguildapp.skillguild.entities.Question</class>
+    <class>com.skillguildapp.skillguild.entities.Resource</class>
+    <class>com.skillguildapp.skillguild.entities.ResourceType</class>
+    <class>com.skillguildapp.skillguild.entities.Status</class>
+    <class>com.skillguildapp.skillguild.entities.Topic</class>
+    <class>com.skillguildapp.skillguild.entities.User</class>
     <!-- End Entities Here -->
 
     <properties>
