@@ -47,7 +47,7 @@ public class CategoryController {
 	@PostMapping("categories")
 	public Category create(HttpServletRequest req, HttpServletResponse res, @RequestBody Category category) {
 
-		Category newCategory = new Category();
+		Category newCategory = category;
 		try {
 			newCategory = category;
 			catServ.create(newCategory);
@@ -76,7 +76,7 @@ public class CategoryController {
 	public Category updateCategory(
 			// Principal principal,
 			@PathVariable("cid") int cid, @RequestBody Category category, HttpServletResponse res) {
-		Category updateCategory = new Category();
+		Category updateCategory = category;
 		updateCategory = category;
 		try {
 			updateCategory = catServ.update(cid, updateCategory);
