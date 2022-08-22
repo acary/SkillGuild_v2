@@ -47,8 +47,10 @@ public class CategoryController {
 	@PostMapping("categories")
 	public Category create(HttpServletRequest req, HttpServletResponse res, @RequestBody Category category) {
 
+		Category newCategory = new Category();
 		try {
-			catServ.create(category);
+			newCategory = category;
+			catServ.create(newCategory);
 			res.setStatus(201);
 			StringBuffer url = req.getRequestURL();
 			res.setHeader("Location", url.toString());
@@ -56,7 +58,7 @@ public class CategoryController {
 			e.printStackTrace();
 			res.setStatus(400);
 		}
-		return category;
+		return newCategory;
 	}
 
 	@DeleteMapping("categories/{cid}")
@@ -74,17 +76,19 @@ public class CategoryController {
 	public Category updateCategory(
 			// Principal principal,
 			@PathVariable("cid") int cid, @RequestBody Category category, HttpServletResponse res) {
+		Category updateCategory = new Category();
+		updateCategory = category;
 		try {
-			category = catServ.update(cid, category);
-			if (category == null) {
+			updateCategory = catServ.update(cid, updateCategory);
+			if (updateCategory == null) {
 				res.setStatus(404);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setStatus(400);
-			category = null;
+			updateCategory = null;
 		}
-		return category;
+		return updateCategory;
 	}
 
 }

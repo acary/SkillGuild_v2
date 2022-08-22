@@ -22,11 +22,14 @@ public class AuthController {
 
 	@PostMapping(path = "/register")
 	public User register(@RequestBody User user, HttpServletResponse res) {
-		if (user == null) {
+		
+		User newUser = new User();
+		newUser = user;
+		if (newUser == null) {
 			res.setStatus(400);
 		}
-		user = authService.register(user);
-		return user;
+		newUser = authService.register(user);
+		return newUser;
 	}
 
 	@GetMapping(path = "/authenticate")
