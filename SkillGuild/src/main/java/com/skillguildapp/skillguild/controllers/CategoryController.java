@@ -77,7 +77,6 @@ public class CategoryController {
 			// Principal principal,
 			@PathVariable("cid") int cid, @RequestBody Category category, HttpServletResponse res) {
 		Category updateCategory = category;
-		updateCategory = category;
 		try {
 			updateCategory = catServ.update(cid, updateCategory);
 			if (updateCategory == null) {

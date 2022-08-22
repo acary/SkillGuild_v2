@@ -29,14 +29,11 @@ public class Category {
 	
 	@JsonIgnoreProperties({"categories"})
 	@ManyToMany(mappedBy = "categories")
-	private List<Guild> guilds;
+	private List<Guild> guilds = new ArrayList<>();
 
 	
 	public void addGuild(Guild guild) {
-		if (guild == null)
-			guilds = new ArrayList<>();
-
-		if (!guilds.contains(guild)) {
+		if (!guilds.contains(guild) && guild != null) {
 			guilds.add(guild);
 			guild.addCategories(this);
 		}
