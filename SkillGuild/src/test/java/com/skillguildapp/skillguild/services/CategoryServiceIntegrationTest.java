@@ -12,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.skillguildapp.skillguild.entities.Category;
-import com.skillguildapp.skillguild.services.CategoryService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
@@ -33,7 +32,7 @@ public class CategoryServiceIntegrationTest {
 		Category newCategory = categoryService.create(category);
 
 		assertNotNull(newCategory);
-		assertNotNull(newCategory.getId());
+		assertEquals(true, newCategory.getId() > 0);
 		assertEquals("Software Engineering", newCategory.getName());
 	}
 }
