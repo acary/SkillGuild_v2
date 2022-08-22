@@ -99,6 +99,23 @@ class ContentControllerTest {
 		verifyNoMoreInteractions(contentService);
 	}
 
+	@DisplayName("When calling guildContent, return Contents")
+	@Test
+	void getGuildContent_shouldReturn_Contents() throws Exception {
+		// given
+		Content content = new Content();
+		List<Content> contents = new ArrayList<>();
+		contents.add(content);
+		when(contentService.guildContents(any(Integer.class))).thenReturn(contents);
+
+		// when
+		mockMvc.perform(get("/v1/guilds/1/contents").contentType("text/plain")).andDo(print()).andReturn();
+
+		// then
+		verify(contentService, times(1)).guildContents(any(Integer.class));
+		verifyNoMoreInteractions(contentService);
+	}
+
 	@DisplayName("Show guild content")
 	@Test
 	@WithMockUser(username = "SkillContentUser")
@@ -112,6 +129,24 @@ class ContentControllerTest {
 
 		// then
 		verify(contentService, times(1)).showGuildContent(any(Integer.class), any(Integer.class));
+		verifyNoMoreInteractions(contentService);
+	}
+
+	@DisplayName("Get users content")
+	@Test
+	@WithMockUser(username = "SkillContentUser")
+	void getShowUsersContent_shouldReturnContent() throws Exception {
+		// given
+		List<Content> contents = new ArrayList<>();
+		Content content = new Content();
+		contents.add(content);
+		when(contentService.userContents(any(String.class))).thenReturn(contents);
+
+		// when
+		mockMvc.perform(get("/v1/users/contents").contentType("text/plain")).andDo(print()).andReturn();
+
+		// then
+		verify(contentService, times(1)).userContents(any(String.class));
 		verifyNoMoreInteractions(contentService);
 	}
 
@@ -146,9 +181,10 @@ class ContentControllerTest {
 		// when
 		MediaType MEDIA_TYPE_JSON_UTF8 = new MediaType("application", "json",
 				java.nio.charset.Charset.forName("UTF-8"));
-		mockMvc.perform(post("/v1/users/1/guilds/1/statuses/1/contents").principal(principal).accept(MEDIA_TYPE_JSON_UTF8)
-				.content(convertObjectToJsonBytes(content)).contentType(MEDIA_TYPE_JSON_UTF8)).andDo(print())
-				.andReturn();
+		mockMvc.perform(
+				post("/v1/users/1/guilds/1/statuses/1/contents").principal(principal).accept(MEDIA_TYPE_JSON_UTF8)
+						.content(convertObjectToJsonBytes(content)).contentType(MEDIA_TYPE_JSON_UTF8))
+				.andDo(print()).andReturn();
 
 		// then
 		verify(contentService, times(1)).create(any(Integer.class), any(Integer.class), any(Integer.class),
@@ -203,11 +239,9 @@ class ContentControllerTest {
 		// when
 		MediaType MEDIA_TYPE_JSON_UTF8 = new MediaType("application", "json",
 				java.nio.charset.Charset.forName("UTF-8"));
-		mockMvc.perform(post("/v1/guilds/1/statuses/1/contents").accept(MEDIA_TYPE_JSON_UTF8)
-				.principal(principal)
-				.content(convertObjectToJsonBytes(content))
-				.contentType(MEDIA_TYPE_JSON_UTF8))
-				.andDo(print()).andReturn();
+		mockMvc.perform(post("/v1/guilds/1/statuses/1/contents").accept(MEDIA_TYPE_JSON_UTF8).principal(principal)
+				.content(convertObjectToJsonBytes(content)).contentType(MEDIA_TYPE_JSON_UTF8)).andDo(print())
+				.andReturn();
 
 		// then
 		verify(contentService, times(1)).createNewContent(any(Integer.class), any(Integer.class), any(Content.class),
