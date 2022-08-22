@@ -4,6 +4,7 @@ plugins {
 	id "net.serenity-bdd.serenity-gradle-plugin" version "3.2.5"
 	id 'java'
 	id 'war'
+	id "org.sonarqube" version "3.4.0.2513"
 }
 
 defaultTasks 'clean', 'test', 'aggregate'
